@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class WelcomeController {
     private String message;
 
-    public WelcomeController(    @Value("${welcome.message}") String mesage) {
+    public WelcomeController(    @Value("${welcome.message:NOT SET}") String mesage) {
         message = mesage;
     }
     @GetMapping("/")

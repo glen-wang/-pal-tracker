@@ -12,12 +12,12 @@ import static org.springframework.boot.test.context.SpringBootTest.WebEnvironmen
 @SpringBootTest(classes = PalTrackerApplication.class, webEnvironment = RANDOM_PORT)
 public class WelcomeApiTest {
 
-//    @Autowired
-//    private TestRestTemplate restTemplate;
-//
-//    @Test
-//    public void exampleTest() {
-//        String body = this.restTemplate.getForObject("/", String.class);
-//        assertThat(body).isEqualTo("Hello from test");
-//    }
+    @Autowired
+    private TestRestTemplate restTemplate;
+
+    @Test
+    public void exampleTest() {
+        String body = this.restTemplate.getForObject("/", String.class);
+        assertThat(body).isEqualTo("Hello from test");
+    }
 }

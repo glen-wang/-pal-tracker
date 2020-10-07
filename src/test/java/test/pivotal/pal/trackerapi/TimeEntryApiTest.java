@@ -28,10 +28,10 @@ public class TimeEntryApiTest {
     private final long projectId = 123L;
     private final long userId = 456L;
     private TimeEntry timeEntry = new TimeEntry(projectId, userId, LocalDate.parse("2017-01-08"), 8);
-
+    private String host= "";//http://pal-tracker-gw.apps.evans.pal.pivotal.io";
     @Test
     public void testCreate() throws Exception {
-        ResponseEntity<String> createResponse = restTemplate.postForEntity("/time-entries", timeEntry, String.class);
+        ResponseEntity<String> createResponse = restTemplate.postForEntity(host+ "/time-entries", timeEntry, String.class);
 
 
         assertThat(createResponse.getStatusCode()).isEqualTo(HttpStatus.CREATED);
@@ -49,7 +49,7 @@ public class TimeEntryApiTest {
         Long id = createTimeEntry();
 
 
-        ResponseEntity<String> listResponse = restTemplate.getForEntity("/time-entries", String.class);
+        ResponseEntity<String> listResponse = restTemplate.getForEntity(host+ "/time-entries", String.class);
 
 
         assertThat(listResponse.getStatusCode()).isEqualTo(HttpStatus.OK);
@@ -68,7 +68,7 @@ public class TimeEntryApiTest {
         Long id = createTimeEntry();
 
 
-        ResponseEntity<String> readResponse = this.restTemplate.getForEntity("/time-entries/" + id, String.class);
+        ResponseEntity<String> readResponse = this.restTemplate.getForEntity(host+ "/time-entries/" + id, String.class);
 
 
         assertThat(readResponse.getStatusCode()).isEqualTo(HttpStatus.OK);
@@ -88,7 +88,7 @@ public class TimeEntryApiTest {
         TimeEntry updatedTimeEntry = new TimeEntry(projectId, userId, LocalDate.parse("2017-01-09"), 9);
 
 
-        ResponseEntity<String> updateResponse = restTemplate.exchange("/time-entries/" + id, HttpMethod.PUT, new HttpEntity<>(updatedTimeEntry, null), String.class);
+        ResponseEntity<String> updateResponse = restTemplate.exchange(host+ "/time-entries/" + id, HttpMethod.PUT, new HttpEntity<>(updatedTimeEntry, null), String.class);
 
 
         assertThat(updateResponse.getStatusCode()).isEqualTo(HttpStatus.OK);
@@ -106,19 +106,19 @@ public class TimeEntryApiTest {
         Long id = createTimeEntry();
 
 
-        ResponseEntity<String> deleteResponse = restTemplate.exchange("/time-entries/" + id, HttpMethod.DELETE, null, String.class);
+        ResponseEntity<String> deleteResponse = restTemplate.exchange(host+ "/time-entries/" + id, HttpMethod.DELETE, null, String.class);
 
 //TODO change the no_content to ok
-        assertThat(deleteResponse.getStatusCode()).isEqualTo(HttpStatus.OK);
+        assertThat(deleteResponse.getStatusCode()).isEqualTo(HttpStatus.NO_CONTENT);
 
-        ResponseEntity<String> deletedReadResponse = this.restTemplate.getForEntity("/time-entries/" + id, String.class);
+        ResponseEntity<String> deletedReadResponse = this.restTemplate.getForEntity(host+ "/time-entries/" + id, String.class);
         assertThat(deletedReadResponse.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
     }
 
     private Long createTimeEntry() {
         HttpEntity<TimeEntry> entity = new HttpEntity<>(timeEntry);
 
-        ResponseEntity<TimeEntry> response = restTemplate.exchange("/time-entries", HttpMethod.POST, entity, TimeEntry.class);
+        ResponseEntity<TimeEntry> response = restTemplate.exchange(host+ "/time-entries", HttpMethod.POST, entity, TimeEntry.class);
 
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.CREATED);
 

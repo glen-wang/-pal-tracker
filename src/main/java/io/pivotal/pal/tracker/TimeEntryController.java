@@ -35,7 +35,8 @@ public class TimeEntryController {
     public @ResponseBody
     ResponseEntity delete(@PathVariable long timeEntryId) {
         boolean result = timeEntryRepository.delete(timeEntryId);
-        return result? ResponseEntity.ok().build() : ResponseEntity.noContent().build();
+        //return result? ResponseEntity.ok().build() :
+                return ResponseEntity.noContent().build();
     }
 
     @PutMapping(path="/time-entries/{timeEntryId}")

@@ -27,7 +27,6 @@ public class JdbcTimeEntryRepository implements TimeEntryRepository {
 
     @Override
     public List<TimeEntry> list() {
-        System.out.println("------------------");
         return jdbcTemplate.query(
                 "SELECT id, project_id, user_id, date, hours FROM time_entries", mapper
         );
